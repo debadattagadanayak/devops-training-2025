@@ -1,10 +1,25 @@
 resource "aws_instance" "debadatta-ec2" {
   #ami           = "ami-0a25a306450a2cba3"
-  ami           = var.dev-ami-id
+  ami = var.dev-ami-id
   instance_type = var.vm-size
   key_name      = aws_key_pair.dev_key_aws.key_name
   tags = {
     Name = var.vm-name
+  }
+
+  provisioner "remote-exec" {
+    inline = [ 
+      "sudo dnf install git httpd -y",
+      "mkdir -p hello/terraform"
+     ]
+    
+  }
+  connection {
+    type = "ssh"
+    user = "ec2-user"
+    host = self.public_ip
+    timeout = "3m"
+    private_key = tls_private_key.dev_key_gen.private_key_pem
   }
 }
 
