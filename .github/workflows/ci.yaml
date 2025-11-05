@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps: # what exactly you want to run in ubuntu machine 
     - name: taking code from my repo
-      uses: actions/checkout@V5
+      uses: actions/checkout@v5
       with:
         ref: dryrun-aws
     - name: my first step to test github action 
