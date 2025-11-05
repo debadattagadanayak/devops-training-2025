@@ -12,10 +12,16 @@ jobs:
   test-job:
     runs-on: ubuntu-latest 
     steps: # what exactly you want to run in ubuntu machine 
+    - name: installing tf
+      uses: hashicorp/setup-terraform@v3
+      
+    - name: Set up Docker
+      uses: docker/setup-docker-action@v4
     - name: taking code from my repo
       uses: actions/checkout@v5
       with:
         ref: dryrun-aws
+
     - name: my first step to test github action 
       run: |
         echo "Hello world"
