@@ -8,3 +8,8 @@ output "my-ec2-instanceid" {
   value = aws_instance.debadatta-ec2.id
 
 }
+
+resource "local_file" "myip" {
+  content  = aws_instance.debadatta-ec2.public_ip
+  filename = "myip.txt"
+}
