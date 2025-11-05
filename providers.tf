@@ -10,14 +10,14 @@ terraform {
 provider "aws" {
   region = "ap-southeast-2"
 }
- 
+
 terraform {
   backend "s3" {
-    bucket = "dev-roche-terraform-bucket"
-    key    = "dev/deb/terraform.tfstate"
-    encrypt = true
+    bucket         = "dev-roche-terraform-bucket"
+    key            = "dev/deb/terraform.tfstate"
+    encrypt        = true
     dynamodb_table = "dev-roche-table1"
-    region = "ap-southeast-2"
-    
+    region         = "ap-southeast-2"
+
   }
 }
