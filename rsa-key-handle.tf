@@ -13,6 +13,6 @@ resource "local_file" "dev_key_private_pem" {
 
 
 resource "aws_key_pair" "dev_key_aws" {
-  key_name   = "dev-key"
+  key_name   = var.ec2-key-name
   public_key = tls_private_key.dev_key_gen.public_key_openssh
 }

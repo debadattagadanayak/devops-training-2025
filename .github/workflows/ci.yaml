@@ -2,7 +2,7 @@ name: Debadatta job
 # trigger point 
 on:
   push:
-    branches: [ "dryrun-aws" ]
+    branches: [ "main" ]
     paths-ignore:
       - "README.md"
       - "terraform.tfstate"
@@ -17,10 +17,11 @@ jobs:
       
     - name: Set up Docker
       uses: docker/setup-docker-action@v4
+
     - name: taking code from my repo
       uses: actions/checkout@v5
       with:
-        ref: dryrun-aws
+        ref: main
 
     - name: my first step to test github action 
       run: |
