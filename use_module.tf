@@ -23,5 +23,6 @@ module "debadatta-module-for-ec2" {
   dev-ami-id        = "ami-0a25a306450a2cba3"
   my-vpc-id         = "vpc-02d56e9aa1ce2f114"
   my-sec-group-name = "debadatta-sg"
+  novm              = 2
 
 }
