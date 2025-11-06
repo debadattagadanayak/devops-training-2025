@@ -2,7 +2,7 @@ name: debadatta job
 # trigger point 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "dryrun-aws" ]
     paths-ignore:
       - "README.md"
       - "terraform.tfstate"
@@ -16,7 +16,7 @@ jobs:
     - name: taking code from my repo 
       uses: actions/checkout@v5
       with:
-        ref: master 
+        ref: dryrun-aws 
 # terrafor installing 
     - name: installing terraform 
       uses: hashicorp/setup-terraform@v3
