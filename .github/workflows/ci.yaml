@@ -1,45 +1,37 @@
-name: Debadatta job 
-# trigger point 
-on:
+name: Debadatta job
+'on':
   push:
-    branches: [ "dryrun-aws" ]
+    branches:
+      - dryrun-aws
     paths-ignore:
-      - "README.md"
-      - "terraform.tfstate"
-
-# creating jobs 
+      - README.md
+      - terraform.tfstate
 jobs:
   test-job:
-    runs-on: ubuntu-latest 
-    steps: # what exactly you want to run in ubuntu machine 
-    - name: installing tf
-      uses: hashicorp/setup-terraform@v3
-      
-    - name: Set up Docker
-      uses: docker/setup-docker-action@v4
-
-    - name: taking code from my repo
-      uses: actions/checkout@v5
-      with:
-        ref: dryrun-aws
-
-    - name: my first step to test github action 
-      run: |
-        echo "Hello world"
-        git version 
-        whoami
-        ls -a
-        terraform version
-        docker version
-
-    - name: Configure AWS credentials
+    runs-on: ubuntu-latest
+    steps:
+      - name: installing tf
+        uses: hashicorp/setup-terraform@v3
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+      - name: taking code from my repo
+        uses: actions/checkout@v5
+        with:
+          ref: dryrun-aws
+      - name: my first step to test github action
+        run: |
+          echo "Hello world"
+          git version 
+          whoami
+          ls -a
+          terraform version
+          docker version
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2 
-    - name: Test AWS CLI
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          aws-region: ap-southeast-2
+      - name: Test AWS CLI
         run: |
           aws sts get-caller-identity
-    
-  
