@@ -3,6 +3,8 @@ resource "aws_instance" "debadatta-ec2" {
   ami = var.dev-ami-id
   instance_type = var.vm-size
   key_name      = aws_key_pair.dev_key_aws.key_name
+  security_groups = [ aws_security_group.allow_tls.name ]
+  #vpc_security_group_ids = [ aws_security_group.allow_tls.id ]
   tags = {
     Name = var.vm-name
   }

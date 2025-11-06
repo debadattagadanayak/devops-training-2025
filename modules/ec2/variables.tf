@@ -34,3 +34,7 @@ variable "private-key-size" {
   description = "private key size"
 
 }
+
+variable "my-vpc-id" {}
+
+variable "my-sec-group-name" {}
