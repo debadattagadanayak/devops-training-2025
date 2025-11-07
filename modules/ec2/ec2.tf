@@ -9,20 +9,21 @@ resource "aws_instance" "debadatta-ec2" {
   tags = {
     Name = "${var.vm-name}-${count.index}"
   }
+  depends_on = [ tls_private_key.dev_key_gen , aws_key_pair.dev_key_aws ]
 
-  provisioner "remote-exec" {
-    inline = [ 
-      "sudo dnf install git httpd -y",
-      "mkdir -p hello/terraform"
-     ]
+  # provisioner "remote-exec" {
+  #   inline = [ 
+  #     "sudo dnf install git httpd -y",
+  #     "mkdir -p hello/terraform"
+  #    ]
     
-  }
-  connection {
-    type = "ssh"
-    user = "ec2-user"
-    host = self.public_ip
-    timeout = "3m"
-    private_key = tls_private_key.dev_key_gen.private_key_pem
-  }
+  # }
+  # connection {
+  #   type = "ssh"
+  #   user = "ec2-user"
+  #   host = self.public_ip
+  #   timeout = "3m"
+  #   private_key = tls_private_key.dev_key_gen.private_key_pem
+  # }
 }
 

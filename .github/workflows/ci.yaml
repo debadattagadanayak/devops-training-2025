@@ -2,7 +2,7 @@ name: debadatta job
 # trigger point 
 on:
   push:
-    branches: [ "dryrun-aws-" ]
+    branches: [ "main" ]
     paths-ignore:
       - "README.md"
       - "terraform.tfstate"
@@ -16,7 +16,7 @@ jobs:
     - name: taking code from my repo 
       uses: actions/checkout@v5
       with:
-        ref: dryrun-aws- 
+        ref: main
 # terrafor installing 
     - name: installing terraform 
       uses: hashicorp/setup-terraform@v3
@@ -47,6 +47,13 @@ jobs:
         terraform plan 
         sleep 2
         terraform apply --auto-approve 
+        ls modules/ec2
+
+    - name: Upload inventory to artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: dev-github-artifact
+        path: modules/ec2/ansible-inventory.txt
 
   infra-destroy-job:
     needs: infra-provision-job
@@ -66,6 +73,14 @@ jobs:
     # isntalling  
     - name: installing terraform 
       uses: hashicorp/setup-terraform@v3
+
+    - name: Download Artificat
+      uses: actions/download-artifact@v5
+      with:
+        name: dev-github-artifact
+    
+    - name: Display
+      run: ls -R
 
     - name: destroying it 
       run: | 

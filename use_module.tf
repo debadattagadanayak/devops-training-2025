@@ -11,14 +11,20 @@ terraform {
     region         = "ap-southeast-2"
 
   }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.19.0"
+    }
+  }
 }
 
 module "debadatta-module-for-ec2" {
   source            = "./modules/ec2"
-  ec2-key-name      = "dev-key"
+  ec2-key-name      = "dev-key-final-day"
   private-key-algo  = "RSA"
   private-key-size  = 4096
-  vm-name           = "dev-ec2"
+  vm-name           = "dev-ec2-final-day"
   vm-size           = "t2.nano"
   dev-ami-id        = "ami-0a25a306450a2cba3"
   my-vpc-id         = "vpc-02d56e9aa1ce2f114"
