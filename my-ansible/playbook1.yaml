@@ -1,5 +1,6 @@
 ---
 - name: Defining target group
   hosts: web-servers
+  become: true
   roles: 
   - apache-webserver
