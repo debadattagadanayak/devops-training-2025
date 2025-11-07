@@ -11,7 +11,7 @@ output "my-ec2-instanceid" {
 
 resource "local_file" "myip" {
   filename   = "${path.module}/ansible-inventory.txt"
-  content = "[we-servers]\n${join("\n", aws_instance.debadatta-ec2[*].public_ip)}"
+  content = "[web-servers]\n${join("\n", aws_instance.debadatta-ec2[*].public_ip)}"
 #   content    = <<EOT
 # [web-servers]
 # ${join("\n", aws_instance.debadatta-ec2[*].public_ip)}
