@@ -2,7 +2,7 @@ name: debadatta job
 # trigger point 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dryrun-aws" ]
     paths-ignore:
       - "README.md"
       - "terraform.tfstate"
@@ -16,11 +16,11 @@ jobs:
     - name: taking code from my repo 
       uses: actions/checkout@v5
       with:
-        ref: main
-# terrafor installing 
+        ref: dryrun-aws
+    # terrafor installing 
     - name: installing terraform 
       uses: hashicorp/setup-terraform@v3
-# running some commands 
+    # running some commands 
     - name: my first step to test github action 
       run: |
         echo "Hello world"
@@ -29,12 +29,12 @@ jobs:
         ls -a 
         terraform version
     # configure aws secret keys 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v5.1.0
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-southeast-2
+    # - name: Configure AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v5.1.0
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: ap-southeast-2
 
     - name: verify aws connection 
       run: | 
@@ -53,26 +53,31 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: dev-github-artifact
-        path: modules/ec2/ansible-inventory.txt
+        path: |
+          modules/ec2/ansible-inventory.txt
+          modules/ec2/dev-key.pem
 
-  infra-destroy-job:
+  infra-config-job:
     needs: infra-provision-job
     runs-on: ubuntu-latest
     steps:
     - name: checking out code 
       uses: actions/checkout@v5
       with:
-        ref: dryrun-aws 
-    - name: login to aws creds 
-      uses: aws-actions/configure-aws-credentials@v5.1.0
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-southeast-2
+        ref: main
+        sparse-checkout: |
+          my-ansible 
 
-    # isntalling  
-    - name: installing terraform 
-      uses: hashicorp/setup-terraform@v3
+    - name: verify checkout
+      run: ls -R
+        
+    # installing  
+    - name: installing ansible 
+      run: |
+        echo "Setup of ansible for ubuntu"
+        sudo apt update
+        sudo apt install ansible -y
+        ansible --version
 
     - name: Download Artificat
       uses: actions/download-artifact@v5
@@ -82,12 +87,19 @@ jobs:
     - name: Display
       run: ls -R
 
-    - name: destroying it 
-      run: | 
-        echo "checking resoruces"
-        terraform init 
-        terraform state list
-        terraform destroy --auto-approve
+  # infra-destroy-job:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: installing terraform 
+  #       uses: hashicorp/setup-terraform@v3
+
+  #     - name: destroying it 
+  #       run: | 
+  #         echo "checking resoruces"
+  #         terraform init 
+  #         terraform state list
+  #         terraform destroy --auto-approve 
+    
 
 
           
