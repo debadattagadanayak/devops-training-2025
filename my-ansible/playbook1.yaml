@@ -1,33 +1,5 @@
 ---
 - name: Defining target group
   hosts: web-servers
-  vars:
-    x: httpd
-    z: git
-  #become true means root access
-  become: true
-
-  tasks:
-    - name: Testing ping
-      ping:
-
-    - name: Running sample commands
-      command: date
-
-    - name: Install {{x}} and {{z}} software
-      yum:
-        name: 
-        - "{{x}}"
-        - "{{z}}"
-        state: present
-    
-    - name: copy code to httpd app server
-      copy:
-        src: my-apps/index.html
-        dest: /var/www/html/
-    
-    - name: starting {{ x }}
-      service:
-        name: "{{ x }}"
-        state: started
-        enabled: yes
+  roles: 
+  - apache-webserver

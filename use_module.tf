@@ -25,7 +25,7 @@ module "debadatta-module-for-ec2" {
   private-key-algo  = "RSA"
   private-key-size  = 4096
   vm-name           = "dev-ec2-final-day"
-  vm-size           = "t2.nano"
+  vm-size           = "t2.small"
   dev-ami-id        = "ami-0a25a306450a2cba3"
   my-vpc-id         = "vpc-02d56e9aa1ce2f114"
   my-sec-group-name = "debadatta-sg"
