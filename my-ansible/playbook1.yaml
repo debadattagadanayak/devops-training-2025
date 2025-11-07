@@ -24,9 +24,10 @@
     - name: copy code to httpd app server
       copy:
         src: my-apps/index.html
-        dest: /var/www/html/dev.html
+        dest: /var/www/html/
     
     - name: starting {{ x }}
       service:
         name: "{{ x }}"
         state: started
+        enabled: yes

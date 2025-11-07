@@ -11,7 +11,7 @@ on:
 jobs:
   infra-provision-job:
     runs-on: ubuntu-latest 
-    steps: # what exactly you want to run in ubuntu machine 
+    steps: 
     # calling first github action to clone my dryrun-aws data to runner machine 
     - name: taking code from my repo 
       uses: actions/checkout@v5
@@ -86,6 +86,13 @@ jobs:
         sudo apt update
         sudo apt install ansible -y 
         ansible --version 
+    - name: Running ansible playbook  
+      run: | 
+        echo "Running Ansible playbook"
+        chmod 400 dev-key.pem
+        cd my-ansible
+        ansible-playbook -i ../ansible-inventory.txt --private-key ../dev-key.pem playbook1.yaml
+
 
     
 
