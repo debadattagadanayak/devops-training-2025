@@ -110,6 +110,7 @@ jobs:
           ref: main 
           sparse-checkout: |
             modules
+#comment
       - name: destroy terraform
         run: |
           echo "destroying infra"
